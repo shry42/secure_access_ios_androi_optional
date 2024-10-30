@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:secure_access/authenticate_face/authenticate_face_android.dart';
 import 'package:secure_access/authenticate_face/authenticate_face_view.dart';
-import 'package:secure_access/authenticate_face/checkout_android.dart';
 import 'package:secure_access/common/utils/custom_snackbar.dart';
 import 'package:secure_access/common/utils/screen_size_util.dart';
 import 'package:secure_access/controllers/app_controller.dart';
+import 'package:secure_access/controllers/check_session_by_number_controller.dart';
+import 'package:secure_access/controllers/checkout_session_by_controller.dart';
 import 'package:secure_access/screens/checkout_authenticate.dart';
 
 class FirstTabScreenTablet extends StatefulWidget {
@@ -17,6 +17,12 @@ class FirstTabScreenTablet extends StatefulWidget {
 }
 
 class _FirstTabScreenTabletState extends State<FirstTabScreenTablet> {
+  final CheckSessionByNumberController UserByNumberCont =
+      Get.put(CheckSessionByNumberController());
+
+  final CheckoutSessionByController UserByNumberContro =
+      Get.put(CheckoutSessionByController());
+
   @override
   Widget build(BuildContext context) {
     initializeUtilContexts(context);
@@ -242,8 +248,8 @@ class _FirstTabScreenTabletState extends State<FirstTabScreenTablet> {
                             width: 5,
                           ),
                           GestureDetector(
-                            onTap: () {
-                              Get.to(const AuthenticateCheckoutView());
+                            onTap: () async {
+                              await UserByNumberContro.getNamesList(9892813430);
                               // Get.to(const Checkout_android());
                             },
                             child: const Text(
@@ -267,27 +273,8 @@ class _FirstTabScreenTabletState extends State<FirstTabScreenTablet> {
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       minimumSize: const Size(200, 60)),
-                  onPressed: () {
-                    //  destroying the set noname and nomacthed yes
-                    AppController.setnoName('');
-                    AppController.setEmail('');
-                    AppController.setMobile('');
-                    AppController.setCountryCode('');
-                    AppController.setUserName('');
-                    AppController.setFirebaseKey(null);
-                    AppController.setnoMatched('No');
-                    AppController.setCallUpadteMethod(0);
-                    AppController.setValidKey(0);
-                    AppController.setFaceMatched(0);
-                    AppController.setDateFromBackend(null);
-                    AppController.setMobNoMatchedButFirebaseKeyNull(0);
-                    AppController
-                        .setmobNoMatchedButFirebaseKeyExistsButNotInFirestore(
-                            0);
-                    //
-
-                    Get.offAll(() => const AuthenticateFaceView());
-                    // Get.offAll(() => const AuthenticateFaceViewAndroid());
+                  onPressed: () async {
+                    await UserByNumberCont.getNamesList(9892813430);
                   },
                   child: const Text(
                     'Tap to Check In',
